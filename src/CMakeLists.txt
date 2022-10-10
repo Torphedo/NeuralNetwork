@@ -9,4 +9,5 @@ set(CMAKE_C_STANDARD 99)
 add_executable(NeuralNetwork
 	"main.c"
 	"helpers.h" "helpers.c"
+	"network.h"
 )

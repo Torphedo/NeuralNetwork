@@ -1,17 +1,8 @@
 #include <stdio.h>
-#include <math.h>
 
-#include "layer.h"
+#include "network.h"
 #include "helpers.h"
 
-// Macros are used instead of normal variables
-// because C99 VLAs aren't universally supported.
-#define M_NUMINPUTS 2
-#define M_NUMHIDDENNODES 2
-#define M_NUMOUTPUTS 1
-#define M_NUMTRAININGSETS 4
-
-#define M_LEARNINGRATE 0.1f
 
 int main() {
     double HiddenLayer[M_NUMHIDDENNODES];

@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <math.h>
 
 // Activation function and its derivative
 double sigmoid(double x)
