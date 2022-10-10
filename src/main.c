@@ -5,7 +5,7 @@
 
 
 int main() {
-    double HiddenLayer[M_NUMHIDDENNODES];
+    double HiddenLayerOutput[M_NUMHIDDENNODES];
     double HiddenWeights[M_NUMINPUTS][M_NUMHIDDENNODES];
     double HiddenBias[M_NUMHIDDENNODES];
 
@@ -61,14 +61,14 @@ int main() {
                     activation += TrainingInputs[i][k] * HiddenWeights[k][j];
                 }
 
-                HiddenLayer[j] = sigmoid(activation);
+                HiddenLayerOutput[j] = sigmoid(activation);
             }
 
             // Compute output layer activation
             for (int j = 0; j < M_NUMOUTPUTS; j++) {
                 double activation = OutputBias[j];
                 for (int k = 0; k < M_NUMHIDDENNODES; k++) {
-                    activation += HiddenLayer[k] * OutputWeights[k][j];
+                    activation += HiddenLayerOutput[k] * OutputWeights[k][j];
                 }
                 OutputLayer[j] = sigmoid(activation);
             }
@@ -96,14 +96,14 @@ int main() {
                 for (int k = 0; k < M_NUMOUTPUTS; k++) {
                     dError += deltaOutput[k] * OutputWeights[j][k];
                 }
-                deltaHidden[j] = dError * dSigmoid(HiddenLayer[j]);
+                deltaHidden[j] = dError * dSigmoid(HiddenLayerOutput[j]);
             }
 
             // Apply change in output weights
             for (int j = 0; j < M_NUMOUTPUTS; j++) {
                 OutputBias[j] += deltaOutput[j] * M_LEARNINGRATE;
                 for (int k = 0; k < M_NUMHIDDENNODES; k++) {
-                    OutputWeights[k][j] += HiddenLayer[k] * deltaOutput[j] * M_LEARNINGRATE;
+                    OutputWeights[k][j] += HiddenLayerOutput[k] * deltaOutput[j] * M_LEARNINGRATE;
                 }
             }
             // Apply change in hidden weights
