@@ -46,12 +46,12 @@ int main() {
         OutputBias[i] = init_weight();
     }
 
-    int epochs = 100000001;
+    int epochs = 10000000;
     // Iterate through training for a set number of epochs
     for (int n = 0; n < epochs; n++) {
 
-        // Tracking progress makes it SIGNIFICANTLY slower (about 50x at 10 million epochs)
-        if (n % 10000000 == 0) {
+        // Update progress every 1 million cycles to avoid slowing down too much
+        if (n % 1000000 == 0) {
             printf("\rIn progress %d%%", (int) (((float) (n + 1) / epochs) * 100));
         }
 
@@ -82,7 +82,7 @@ int main() {
                 OutputLayer[j] = sigmoid(activation);
             }
 
-            if (n == 100000000) {
+            if (n == 9999999) {
                 printf("\nInputs: %f %f    Output: %f", TrainingInputs[i][0], TrainingInputs[i][1], OutputLayer[0]);
                 printf("    Expected Output: %f\n", TrainingOutputs[i][0]);
             }
@@ -91,7 +91,7 @@ int main() {
             double deltaOutput[M_NUMOUTPUTS];
             for (int j = 0; j < M_NUMOUTPUTS; j++) {
                 double dError = (TrainingOutputs[i][j] - OutputLayer[j]);
-                if (n == 100000000)
+                if (n == 9999999)
                 {
                     printf("Error: %f\n", dError);
                 }
