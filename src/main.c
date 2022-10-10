@@ -1,0 +1,160 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+// Macros are used instead of normal variables
+// because C99 VLAs aren't universally supported.
+#define M_NUMINPUTS 2
+#define M_NUMHIDDENNODES 2
+#define M_NUMOUTPUTS 1
+#define M_NUMTRAININGSETS 4
+
+#define M_LEARNINGRATE 0.1f
+
+// Activation function and its derivative
+double sigmoid(double x)
+{
+    return 1 / ((float) 1 + exp(-x));
+}
+
+double dSigmoid(double x)
+{
+    return x * (1 - x);
+}
+
+// Init all weights and biases between 0.0 and 1.0
+double init_weight()
+{
+    return ((double)rand()) / ((double)RAND_MAX);
+}
+
+void shuffle(int* array, size_t n)
+{
+    if (n > 1)
+    {
+        size_t i;
+        for (i = 0; i < n - 1; i++)
+        {
+            size_t j = i + rand() / (RAND_MAX / (n - i) + 1);
+            int t = array[j];
+            array[j] = array[i];
+            array[i] = t;
+        }
+    }
+}
+
+int main() {
+    double HiddenLayer[M_NUMHIDDENNODES];
+    double HiddenWeights[M_NUMINPUTS][M_NUMHIDDENNODES];
+    double HiddenBias[M_NUMHIDDENNODES];
+
+    double OutputLayer[M_NUMOUTPUTS];
+    double OutputBias[M_NUMOUTPUTS];
+    double OutputWeights[M_NUMHIDDENNODES][M_NUMOUTPUTS];
+
+    // Basic XOR dataset
+    double TrainingInputs[M_NUMTRAININGSETS][M_NUMINPUTS] = {
+        {0.0f, 0.0f}, {1.0f, 0.0f}, {0.0f, 1.0f}, {1.0f, 1.0f}
+    };
+    
+    double TrainingOutputs[M_NUMTRAININGSETS][M_NUMOUTPUTS] = {
+        {0.0f}, {1.0f}, {1.0f}, {0.0f}
+    };
+
+    for (int i = 0; i < M_NUMINPUTS; i++) {
+        for (int j = 0; j < M_NUMHIDDENNODES; j++) {
+            HiddenWeights[i][j] = init_weight();
+        }
+    }
+    for (int i = 0; i < M_NUMHIDDENNODES; i++) {
+        HiddenBias[i] = init_weight();
+        for (int j = 0; j < M_NUMOUTPUTS; j++) {
+            OutputWeights[i][j] = init_weight();
+        }
+    }
+    for (int i = 0; i < M_NUMOUTPUTS; i++) {
+        OutputBias[i] = init_weight();
+    }
+
+    int epochs = 100000001;
+    // Iterate through training for a set number of epochs
+    for (int n = 0; n < epochs; n++) {
+
+        // Tracking progress makes it SIGNIFICANTLY slower (about 50x at 10 million epochs)
+        if (n % 10000000 == 0) {
+            printf("\rIn progress %d%%", (int) (((float) (n + 1) / epochs) * 100));
+        }
+
+        // As per SGD, shuffle the order of the training set
+        int trainingSetOrder[] = { 0,1,2,3 };
+        shuffle(trainingSetOrder, M_NUMTRAININGSETS);
+
+        // Cycle through each of the training set elements
+        for (int x = 0; x < M_NUMTRAININGSETS; x++) {
+            int i = trainingSetOrder[x];
+
+            // Compute hidden layer activation
+            for (int j = 0; j < M_NUMHIDDENNODES; j++) {
+                double activation = HiddenBias[j];
+                for (int k = 0; k < M_NUMINPUTS; k++) {
+                    activation += TrainingInputs[i][k] * HiddenWeights[k][j];
+                }
+
+                HiddenLayer[j] = sigmoid(activation);
+            }
+
+            // Compute output layer activation
+            for (int j = 0; j < M_NUMOUTPUTS; j++) {
+                double activation = OutputBias[j];
+                for (int k = 0; k < M_NUMHIDDENNODES; k++) {
+                    activation += HiddenLayer[k] * OutputWeights[k][j];
+                }
+                OutputLayer[j] = sigmoid(activation);
+            }
+
+            if (n == 100000000) {
+                printf("\nInputs: %f %f    Output: %f", TrainingInputs[i][0], TrainingInputs[i][1], OutputLayer[0]);
+                printf("    Expected Output: %f\n", TrainingOutputs[i][0]);
+            }
+
+            // Compute change in output weights
+            double deltaOutput[M_NUMOUTPUTS];
+            for (int j = 0; j < M_NUMOUTPUTS; j++) {
+                double dError = (TrainingOutputs[i][j] - OutputLayer[j]);
+                if (n == 100000000)
+                {
+                    printf("Error: %f\n", dError);
+                }
+                deltaOutput[j] = dError * dSigmoid(OutputLayer[j]);
+            }
+
+            // Compute change in hidden weights
+            double deltaHidden[M_NUMHIDDENNODES];
+            for (int j = 0; j < M_NUMHIDDENNODES; j++) {
+                double dError = 0.0f;
+                for (int k = 0; k < M_NUMOUTPUTS; k++) {
+                    dError += deltaOutput[k] * OutputWeights[j][k];
+                }
+                deltaHidden[j] = dError * dSigmoid(HiddenLayer[j]);
+            }
+
+            // Apply change in output weights
+            for (int j = 0; j < M_NUMOUTPUTS; j++) {
+                OutputBias[j] += deltaOutput[j] * M_LEARNINGRATE;
+                for (int k = 0; k < M_NUMHIDDENNODES; k++) {
+                    OutputWeights[k][j] += HiddenLayer[k] * deltaOutput[j] * M_LEARNINGRATE;
+                }
+            }
+            // Apply change in hidden weights
+            for (int j = 0; j < M_NUMHIDDENNODES; j++) {
+                HiddenBias[j] += deltaHidden[j] * M_LEARNINGRATE;
+                for (int k = 0; k < M_NUMINPUTS; k++) {
+                    HiddenWeights[k][j] += TrainingInputs[i][k] * deltaHidden[j] * M_LEARNINGRATE;
+                }
+            }
+        }
+    }
+    printf("\n");
+    printf("Done!");
+    return 0;
+}
