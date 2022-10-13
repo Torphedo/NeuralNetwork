@@ -13,6 +13,7 @@ int main() {
     double OutputBias[M_NUMOUTPUTS];
     double OutputWeights[M_NUMHIDDENNODES][M_NUMOUTPUTS];
 
+
     // Basic XOR dataset
     double TrainingInputs[M_NUMTRAININGSETS][M_NUMINPUTS] = {
         {0.0f, 0.0f}, {1.0f, 0.0f}, {0.0f, 1.0f}, {1.0f, 1.0f}
@@ -36,6 +37,7 @@ int main() {
     for (int i = 0; i < M_NUMOUTPUTS; i++) {
         OutputBias[i] = init_weight();
     }
+    network_t Network = new_network(M_NUMINPUTS, M_NUMHIDDENLAYERS, M_NUMOUTPUTS, M_NUMHIDDENNODES);
 
     int epochs = 10000000;
     // Iterate through training for a set number of epochs
