@@ -2,6 +2,7 @@
 
 #include "network.h"
 #include "helpers.h"
+#include "matrix.h"
 
 
 int main() {
@@ -38,7 +39,7 @@ int main() {
         OutputBias[i] = init_weight();
     }
 
-    float* InputData = CreateMatrix(M_NUMINPUTS, M_NUMTRAININGSETS);
+    matrix_t* InputData = matrix_create(M_NUMINPUTS, M_NUMTRAININGSETS);
 
     network_t Network = new_network(M_NUMINPUTS, M_NUMHIDDENLAYERS, M_NUMOUTPUTS, M_NUMHIDDENNODES);
 
@@ -120,7 +121,7 @@ int main() {
             }
         }
     }
-    free(InputData);
+    matrix_free(InputData);
     printf("\n");
     printf("Done!");
     return 0;
