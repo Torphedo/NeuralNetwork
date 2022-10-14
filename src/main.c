@@ -18,7 +18,7 @@ int main() {
     double TrainingInputs[M_NUMTRAININGSETS][M_NUMINPUTS] = {
         {0.0f, 0.0f}, {1.0f, 0.0f}, {0.0f, 1.0f}, {1.0f, 1.0f}
     };
-    
+
     double TrainingOutputs[M_NUMTRAININGSETS][M_NUMOUTPUTS] = {
         {0.0f}, {1.0f}, {1.0f}, {0.0f}
     };
@@ -37,6 +37,25 @@ int main() {
     for (int i = 0; i < M_NUMOUTPUTS; i++) {
         OutputBias[i] = init_weight();
     }
+
+    // 2-dimensional matrix to hold input data
+    float* InputData = calloc(M_NUMTRAININGSETS * M_NUMINPUTS, sizeof(float));
+    if (InputData != NULL)
+    {
+        for (int i = 0; i < M_NUMTRAININGSETS; i++)
+        {
+            for (int j = 0; j < M_NUMINPUTS; j++)
+            {
+                InputData[i * M_NUMINPUTS + j] = 1.0f;
+            }
+        }
+    }
+    else
+    {
+        printf("Failed to allocate input data buffer!");
+        return -1;
+    }
+
     network_t Network = new_network(M_NUMINPUTS, M_NUMHIDDENLAYERS, M_NUMOUTPUTS, M_NUMHIDDENNODES);
 
     int epochs = 10000000;
@@ -117,6 +136,7 @@ int main() {
             }
         }
     }
+    free(InputData);
     printf("\n");
     printf("Done!");
     return 0;
