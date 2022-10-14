@@ -7,3 +7,5 @@ double init_weight();
 
 // Shuffle elements of an int array
 void shuffle(int* array, size_t n);
+
+float* CreateMatrix(unsigned int rows, unsigned int columns);

@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include <math.h>
 
 // Activation function and its derivative
@@ -30,5 +31,20 @@ void shuffle(int* array, size_t n)
             array[j] = array[i];
             array[i] = t;
         }
+    }
+}
+
+float* CreateMatrix(unsigned int rows, unsigned int columns)
+{
+    // 2-dimensional matrix to hold input data
+    float* FloatMatrix = calloc(rows * columns, sizeof(float));
+    if (FloatMatrix != NULL)
+    {
+        return FloatMatrix;
+    }
+    else
+    {
+        printf("CRITICAL: Failed to allocate matrix buffer!\nRows: %d\nColumns: %d\nTotal Size: %d bytes\n", rows, columns, rows * columns * (unsigned int) sizeof(float));
+        return -1;
     }
 }

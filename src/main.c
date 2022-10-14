@@ -38,23 +38,7 @@ int main() {
         OutputBias[i] = init_weight();
     }
 
-    // 2-dimensional matrix to hold input data
-    float* InputData = calloc(M_NUMTRAININGSETS * M_NUMINPUTS, sizeof(float));
-    if (InputData != NULL)
-    {
-        for (int i = 0; i < M_NUMTRAININGSETS; i++)
-        {
-            for (int j = 0; j < M_NUMINPUTS; j++)
-            {
-                InputData[i * M_NUMINPUTS + j] = 1.0f;
-            }
-        }
-    }
-    else
-    {
-        printf("Failed to allocate input data buffer!");
-        return -1;
-    }
+    float* InputData = CreateMatrix(M_NUMINPUTS, M_NUMTRAININGSETS);
 
     network_t Network = new_network(M_NUMINPUTS, M_NUMHIDDENLAYERS, M_NUMOUTPUTS, M_NUMHIDDENNODES);
 
