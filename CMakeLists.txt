@@ -11,18 +11,18 @@ add_subdirectory(src)
 add_subdirectory(tests)
 
 add_test(
-	NAME nn_tests_matrixdot
-	COMMAND nn_tests_matrixdot
+	NAME nn_tests_matrix_dot
+	COMMAND nn_tests_matrix_dot
 )
 add_test(
-	NAME nn_tests_matrixadd
-	COMMAND nn_tests_matrixadd
+	NAME nn_tests_matrix_add
+	COMMAND nn_tests_matrix_add
 )
 add_test(
-	NAME nn_tests_matrixsubtract
-	COMMAND nn_tests_matrixsubtract
+	NAME nn_tests_matrix_subtract
+	COMMAND nn_tests_matrix_subtract
 )
 add_test(
-	NAME nn_tests_matrixscale
-	COMMAND nn_tests_matrixscale
+	NAME nn_tests_matrix_scale
+	COMMAND nn_tests_matrix_scale
 )
