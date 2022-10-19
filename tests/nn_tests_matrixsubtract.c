@@ -9,9 +9,9 @@ int main()
     matrix_random_fill(m1);
     matrix_random_fill(m2);
     matrix_random_fill(m3);
-    matrix_t* sum = matrix_add(m1, m2);
+    matrix_t* sum = matrix_subtract(m1, m2);
 
-    if (matrix_add(m2, m3) != (void*) 0)
+    if (matrix_subtract(m2, m3) != (void*) 0)
     {
         // Matrix add with mismatching dimensions should return NULL
         matrix_free(m1);
