@@ -12,7 +12,7 @@ int main()
     {
         for (unsigned int j = 0; j < m1->columns; j++)
         {
-            if (m1->data[i * m1->columns + j] * FACTOR == scaled->data[i * m1->columns + j])
+            if (m1->data[i * m1->columns + j] * FACTOR != scaled->data[i * m1->columns + j])
             {
                 matrix_free(m1);
                 matrix_free(scaled);

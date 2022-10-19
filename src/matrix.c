@@ -133,7 +133,7 @@ matrix_t* matrix_scale(matrix_t* matrix, float input)
     {
         for (unsigned int j = 0; j < m->columns; j++)
         {
-            m->data[i * m->columns] *= input;
+            m->data[i * m->columns + j] *= input;
         }
     }
     return m;
