@@ -8,3 +8,10 @@ add_executable(
 	"../src/matrix.c"
 	"../src/helpers.c"
 )
+
+add_executable(
+	nn_tests_matrixadd
+	"nn_tests_matrixadd.c"
+	"../src/matrix.c"
+	"../src/helpers.c"
+)

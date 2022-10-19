@@ -25,5 +25,11 @@ void matrix_random_fill(matrix_t* matrix);
 // Creates & returns a copy of an existing matrix.
 matrix_t* matrix_copy(matrix_t* source);
 
+// Returns 1 if the 2 matrices have the same dimensions, and 0 if not.
+unsigned int matrix_check_dimensions(matrix_t* m1, matrix_t* m2);
+
+// Adds 2 matrices together (they must have the same dimensions).
+matrix_t* matrix_add(matrix_t* m1, matrix_t* m2);
+
 // Calculates and returns the dot product of 2 matrices.
 matrix_t* matrix_dot(matrix_t* m1, matrix_t* m2);

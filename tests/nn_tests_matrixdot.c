@@ -22,9 +22,15 @@ int main()
             if (sum != dotproduct->data[i * m2->columns + j])
             {
                 // Fail if the result from matrix_dot() doesn't match the dot product logic here
+                matrix_free(m1);
+                matrix_free(m2);
+                matrix_free(dotproduct);
                 return 1;
             }
         }
     }
+    matrix_free(m1);
+    matrix_free(m2);
+    matrix_free(dotproduct);
 	return 0;
 }

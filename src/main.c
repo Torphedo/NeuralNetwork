@@ -40,7 +40,6 @@ int main() {
     }
 
     matrix_t* InputData = matrix_create(M_NUMINPUTS, M_NUMTRAININGSETS);
-    matrix_fill(InputData, 1.0f);
 
     network_t Network = new_network(M_NUMINPUTS, M_NUMHIDDENLAYERS, M_NUMOUTPUTS, M_NUMHIDDENNODES);
 

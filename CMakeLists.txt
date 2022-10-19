@@ -14,3 +14,8 @@ add_test(
 	NAME nn_tests_matrixdot
 	COMMAND nn_tests_matrixdot
 )
+
+add_test(
+	NAME nn_tests_matrixadd
+	COMMAND nn_tests_matrixadd
+)
