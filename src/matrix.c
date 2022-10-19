@@ -49,3 +49,29 @@ matrix_t* matrix_copy(matrix_t* source)
     }
     return destination;
 }
+
+matrix_t* matrix_dot(matrix_t* m1, matrix_t* m2)
+{
+    if (m1->columns == m2->rows)
+    {
+        matrix_t* product = matrix_create(m1->rows, m2->columns);
+        for (unsigned int i = 0; i < m1->rows; i++)
+        {
+            for (unsigned int j = 0; j < m2->columns; j++)
+            {
+                float sum = 0;
+                for (unsigned int k = 0; k < m2->rows; k++)
+                {
+                    sum += m1->data[i * m1->columns + k] * m2->data[k * m2->columns + j];
+                }
+                product->data[i * m2->columns + j] = sum;
+            }
+        }
+        return product;
+    }
+    else
+    {
+        printf("Matrix dot product failed! (dimension mismatch): %dx%d %dx%d", m1->rows, m1->columns, m2->rows, m2->columns);
+        return NULL;
+    }
+}

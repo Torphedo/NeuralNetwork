@@ -18,3 +18,6 @@ void matrix_fill(matrix_t* matrix, float value);
 
 // Creates & returns a copy of an existing matrix
 matrix_t* matrix_copy(matrix_t* source);
+
+// Calculates and returns the dot product of 2 matrices.
+matrix_t* matrix_dot(matrix_t* m1, matrix_t* m2);
