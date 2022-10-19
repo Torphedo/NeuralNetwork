@@ -2,8 +2,8 @@
 
 int main()
 {
-	matrix_t* m1 = matrix_create(4, 2);
-	matrix_t* m2 = matrix_create(2, 4);
+	matrix_t* m1 = matrix_create(2, 3);
+	matrix_t* m2 = matrix_create(3, 2);
 
 	matrix_random_fill(m1);
 	matrix_random_fill(m2);
