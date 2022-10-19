@@ -13,6 +13,9 @@ matrix_t* matrix_create(unsigned int rows, unsigned int columns);
 // Frees a matrix in memory by pointer.
 void matrix_free(matrix_t* matrix);
 
+// Prints the contents of a matrix to stdout.
+void matrix_print(matrix_t* matrix);
+
 // Fills a matrix with a specified float value.
 void matrix_fill(matrix_t* matrix, float value);
 

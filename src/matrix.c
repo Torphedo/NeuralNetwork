@@ -28,6 +28,20 @@ void matrix_free(matrix_t* matrix)
     return;
 }
 
+void matrix_print(matrix_t* matrix)
+{
+    printf("Rows: %d\nColumns: %d\n", matrix->rows, matrix->columns);
+    for (unsigned int i = 0; i < matrix->rows; i++)
+    {
+        for (unsigned int j = 0; j < matrix->columns; j++)
+        {
+            printf("%f ", matrix->data[i * matrix->columns + j]);
+        }
+        printf("\n");
+    }
+    printf("\n");
+}
+
 void matrix_fill(matrix_t* matrix, float value)
 {
     for (unsigned int i = 0; i < matrix->rows; i++)
