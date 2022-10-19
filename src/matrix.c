@@ -25,3 +25,27 @@ void matrix_free(matrix_t* matrix)
     matrix = NULL;
     return;
 }
+
+void matrix_fill(matrix_t* matrix, float value)
+{
+    for (unsigned int i = 0; i < matrix->rows; i++)
+    {
+        for (unsigned int j = 0; j < matrix->columns; j++)
+        {
+            matrix->data[i * matrix->columns + j] = value;
+        }
+    }
+}
+
+matrix_t* matrix_copy(matrix_t* source)
+{
+    matrix_t* destination = matrix_create(source->rows, source->columns);
+    for (unsigned int i = 0; i < source->rows; i++)
+    {
+        for (unsigned int j = 0; j < source->columns; j++)
+        {
+            destination->data[i * destination->columns + j] = source->data[i * source->columns + j];
+        }
+    }
+    return destination;
+}
