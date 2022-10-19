@@ -1,4 +1,6 @@
 #include <stdlib.h>
+#include <stdio.h>
+#include "helpers.h"
 #include "matrix.h"
 
 matrix_t* matrix_create(unsigned int rows, unsigned int columns)
@@ -33,6 +35,17 @@ void matrix_fill(matrix_t* matrix, float value)
         for (unsigned int j = 0; j < matrix->columns; j++)
         {
             matrix->data[i * matrix->columns + j] = value;
+        }
+    }
+}
+
+void matrix_random_fill(matrix_t* matrix)
+{
+    for (unsigned int i = 0; i < matrix->rows; i++)
+    {
+        for (unsigned int j = 0; j < matrix->columns; j++)
+        {
+            matrix->data[i * matrix->columns + j] = (float) init_weight();
         }
     }
 }

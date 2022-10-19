@@ -13,10 +13,13 @@ matrix_t* matrix_create(unsigned int rows, unsigned int columns);
 // Frees a matrix in memory by pointer.
 void matrix_free(matrix_t* matrix);
 
-// Fills an entire matrix with a specified float value
+// Fills a matrix with a specified float value.
 void matrix_fill(matrix_t* matrix, float value);
 
-// Creates & returns a copy of an existing matrix
+// Fills a matrix with randomly values between 0 and 1.
+void matrix_random_fill(matrix_t* matrix);
+
+// Creates & returns a copy of an existing matrix.
 matrix_t* matrix_copy(matrix_t* source);
 
 // Calculates and returns the dot product of 2 matrices.
