@@ -15,3 +15,10 @@ add_executable(
 	"../src/matrix.c"
 	"../src/helpers.c"
 )
+
+add_executable(
+	nn_tests_matrixsubtract
+	"nn_tests_matrixsubtract.c"
+	"../src/matrix.c"
+	"../src/helpers.c"
+)
