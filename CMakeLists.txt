@@ -26,3 +26,7 @@ add_test(
 	NAME nn_tests_matrix_scale
 	COMMAND nn_tests_matrix_scale
 )
+add_test(
+	NAME nn_tests_matrix_add_scalar
+	COMMAND nn_tests_matrix_add_scalar
+)

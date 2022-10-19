@@ -29,3 +29,10 @@ add_executable(
 	"../src/matrix.c"
 	"../src/helpers.c"
 )
+
+add_executable(
+	nn_tests_matrix_add_scalar
+	"nn_tests_matrix_add_scalar.c"
+	"../src/matrix.c"
+	"../src/helpers.c"
+)
