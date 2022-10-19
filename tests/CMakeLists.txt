@@ -22,3 +22,10 @@ add_executable(
 	"../src/matrix.c"
 	"../src/helpers.c"
 )
+
+add_executable(
+	nn_tests_matrixscale
+	"nn_tests_matrixscale.c"
+	"../src/matrix.c"
+	"../src/helpers.c"
+)

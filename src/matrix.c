@@ -126,6 +126,19 @@ matrix_t* matrix_subtract(matrix_t* m1, matrix_t* m2)
     }
 }
 
+matrix_t* matrix_scale(matrix_t* matrix, float input)
+{
+    matrix_t* m = matrix_copy(matrix);
+    for (unsigned int i = 0; i < m->rows; i++)
+    {
+        for (unsigned int j = 0; j < m->columns; j++)
+        {
+            m->data[i * m->columns] *= input;
+        }
+    }
+    return m;
+}
+
 matrix_t* matrix_dot(matrix_t* m1, matrix_t* m2)
 {
     if (m1->columns == m2->rows)

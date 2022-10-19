@@ -34,5 +34,8 @@ matrix_t* matrix_add(matrix_t* m1, matrix_t* m2);
 // Subtracts a matrix from another matrix of the same size. m2 is subtracted from m1.
 matrix_t* matrix_subtract(matrix_t* m1, matrix_t* m2);
 
+// Multiplies every element in a matrix by the inputted value.
+matrix_t* matrix_scale(matrix_t* matrix, float input);
+
 // Calculates and returns the dot product of 2 matrices.
 matrix_t* matrix_dot(matrix_t* m1, matrix_t* m2);

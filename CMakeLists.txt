@@ -22,3 +22,7 @@ add_test(
 	NAME nn_tests_matrixsubtract
 	COMMAND nn_tests_matrixsubtract
 )
+add_test(
+	NAME nn_tests_matrixscale
+	COMMAND nn_tests_matrixscale
+)
