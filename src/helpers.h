@@ -1,9 +1,9 @@
 // Activation function and its derivative
-double sigmoid(double x);
-double dSigmoid(double x);
+float sigmoid(float x);
+float dSigmoid(float x);
 
 // Init all weights and biases between 0.0 and 1.0
-double init_weight();
+float init_weight();
 
-// Shuffle elements of an int array
+// Randomly shuffle elements of an int array
 void shuffle(int* array, size_t n);

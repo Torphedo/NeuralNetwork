@@ -6,21 +6,22 @@
 
 
 int main() {
-    double HiddenLayerOutput[M_NUMHIDDENNODES];
-    double HiddenWeights[M_NUMINPUTS][M_NUMHIDDENNODES];
-    double HiddenBias[M_NUMHIDDENNODES];
+    float HiddenLayerOutput[M_NUMHIDDENNODES];
+    float HiddenWeights[M_NUMINPUTS][M_NUMHIDDENNODES];
+    float HiddenBias[M_NUMHIDDENNODES];
 
-    double OutputLayer[M_NUMOUTPUTS];
-    double OutputBias[M_NUMOUTPUTS];
-    double OutputWeights[M_NUMHIDDENNODES][M_NUMOUTPUTS];
+    float OutputLayer[M_NUMOUTPUTS];
+    float OutputBias[M_NUMOUTPUTS];
+    float OutputWeights[M_NUMHIDDENNODES][M_NUMOUTPUTS];
 
 
     // Basic XOR dataset
-    double TrainingInputs[M_NUMTRAININGSETS][M_NUMINPUTS] = {
+
+    float TrainingInputs[M_NUMTRAININGSETS][M_NUMINPUTS] = {
         {0.0f, 0.0f}, {1.0f, 0.0f}, {0.0f, 1.0f}, {1.0f, 1.0f}
     };
 
-    double TrainingOutputs[M_NUMTRAININGSETS][M_NUMOUTPUTS] = {
+    float TrainingOutputs[M_NUMTRAININGSETS][M_NUMOUTPUTS] = {
         {0.0f}, {1.0f}, {1.0f}, {0.0f}
     };
 
@@ -62,7 +63,7 @@ int main() {
 
             // Compute hidden layer activation
             for (int j = 0; j < M_NUMHIDDENNODES; j++) {
-                double activation = HiddenBias[j];
+                float activation = HiddenBias[j];
                 for (int k = 0; k < M_NUMINPUTS; k++) {
                     activation += TrainingInputs[i][k] * HiddenWeights[k][j];
                 }
@@ -72,7 +73,7 @@ int main() {
 
             // Compute output layer activation
             for (int j = 0; j < M_NUMOUTPUTS; j++) {
-                double activation = OutputBias[j];
+                float activation = OutputBias[j];
                 for (int k = 0; k < M_NUMHIDDENNODES; k++) {
                     activation += HiddenLayerOutput[k] * OutputWeights[k][j];
                 }
@@ -85,9 +86,9 @@ int main() {
             }
 
             // Compute change in output weights
-            double deltaOutput[M_NUMOUTPUTS];
+            float deltaOutput[M_NUMOUTPUTS];
             for (int j = 0; j < M_NUMOUTPUTS; j++) {
-                double dError = (TrainingOutputs[i][j] - OutputLayer[j]);
+                float dError = (TrainingOutputs[i][j] - OutputLayer[j]);
                 if (n == 9999999)
                 {
                     printf("Error: %f\n", dError);
@@ -96,9 +97,9 @@ int main() {
             }
 
             // Compute change in hidden weights
-            double deltaHidden[M_NUMHIDDENNODES];
+            float deltaHidden[M_NUMHIDDENNODES];
             for (int j = 0; j < M_NUMHIDDENNODES; j++) {
-                double dError = 0.0f;
+                float dError = 0.0f;
                 for (int k = 0; k < M_NUMOUTPUTS; k++) {
                     dError += deltaOutput[k] * OutputWeights[j][k];
                 }

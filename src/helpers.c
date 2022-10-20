@@ -3,20 +3,20 @@
 #include <math.h>
 
 // Activation function and its derivative
-double sigmoid(double x)
+float sigmoid(float x)
 {
     return 1 / ((float)1 + exp(-x));
 }
 
-double dSigmoid(double x)
+float dSigmoid(float x)
 {
     return x * (1 - x);
 }
 
 // Init all weights and biases between 0.0 and 1.0
-double init_weight()
+float init_weight()
 {
-    return ((double)rand()) / ((double)RAND_MAX);
+    return ((float)rand()) / ((float)RAND_MAX);
 }
 
 void shuffle(int* array, size_t n)
