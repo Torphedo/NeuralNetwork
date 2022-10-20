@@ -127,7 +127,7 @@ int main() {
             }
         }
     }
-    matrix_free(InputData);
+    if (InputData != NULL) { matrix_free(InputData); }
     printf("\nDone!");
     return 0;
 }

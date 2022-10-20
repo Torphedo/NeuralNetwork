@@ -1,10 +1,20 @@
 #include <matrix.h>
 
+matrix_t* m1;
+matrix_t* sum;
+
+void exit_test(int code)
+{
+    matrix_free(m1);
+    matrix_free(sum);
+    exit(code);
+}
+
 int main()
 {
-    matrix_t* m1 = matrix_create(2, 2);
+    m1 = matrix_create(2, 2);
     matrix_random_fill(m1);
-    matrix_t* sum = matrix_add_scalar(m1, 5);
+    sum = matrix_add_scalar(m1, 5);
 
     for (unsigned int i = 0; i < m1->rows; i++)
     {
@@ -12,13 +22,9 @@ int main()
         {
             if (m1->data[i * m1->columns + j] + 5 != sum->data[i * m1->columns + j])
             {
-                matrix_free(m1);
-                matrix_free(sum);
-                return 1;
+                exit_test(1);
             }
         }
     }
-    matrix_free(m1);
-    matrix_free(sum);
-    return 0;
+    exit_test(0);
 }
