@@ -9,7 +9,7 @@
 #define M_NUMOUTPUTS 1
 #define M_NUMTRAININGSETS 4
 
-#define M_LEARNINGRATE 0.1f
+static const float LearningRate = 0.1f;
 
 int main() {
     float HiddenLayerOutput[M_NUMHIDDENNODES];
@@ -49,7 +49,7 @@ int main() {
     // At the moment, you'll need to move this to the binary directory for it to work while debugging.
     matrix_t* InputData = matrix_load_text("res/InputData.txt");
 
-    int epochs = 10000000;
+    unsigned int epochs = 10000000;
     // Iterate through training for a set number of epochs
     for (int n = 0; n < epochs; n++) {
 
@@ -113,16 +113,16 @@ int main() {
 
             // Apply change in output weights
             for (int j = 0; j < M_NUMOUTPUTS; j++) {
-                OutputBias[j] += deltaOutput[j] * M_LEARNINGRATE;
+                OutputBias[j] += deltaOutput[j] * LearningRate;
                 for (int k = 0; k < M_NUMHIDDENNODES; k++) {
-                    OutputWeights[k][j] += HiddenLayerOutput[k] * deltaOutput[j] * M_LEARNINGRATE;
+                    OutputWeights[k][j] += HiddenLayerOutput[k] * deltaOutput[j] * LearningRate;
                 }
             }
             // Apply change in hidden weights
             for (int j = 0; j < M_NUMHIDDENNODES; j++) {
-                HiddenBias[j] += deltaHidden[j] * M_LEARNINGRATE;
+                HiddenBias[j] += deltaHidden[j] * LearningRate;
                 for (int k = 0; k < M_NUMINPUTS; k++) {
-                    HiddenWeights[k][j] += TrainingInputs[i][k] * deltaHidden[j] * M_LEARNINGRATE;
+                    HiddenWeights[k][j] += TrainingInputs[i][k] * deltaHidden[j] * LearningRate;
                 }
             }
         }
