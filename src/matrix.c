@@ -77,6 +77,93 @@ matrix_t* matrix_copy(matrix_t* source)
     return destination;
 }
 
+void matrix_save_binary(matrix_t* matrix, char* filepath)
+{
+    FILE* file = fopen(filepath, "wb");
+    if (file != NULL)
+    {
+        fwrite(&matrix->rows, sizeof(unsigned int), 2, file);
+        fwrite(matrix->data, sizeof(float), matrix->rows * matrix->columns, file);
+        fclose(file);
+    }
+    else
+    {
+        printf("Couldn't open a stream for binary matrix file %s!\nMake sure the containing folder exists.\n", filepath);
+    }
+}
+
+void matrix_save_text(matrix_t* matrix, char* filepath)
+{
+    FILE* file = fopen(filepath, "w");
+    if (file != NULL)
+    {
+        fprintf(file, "%d\n%d\n", matrix->rows, matrix->columns);
+        for (unsigned int i = 0; i < matrix->rows; i++)
+        {
+            for (unsigned int j = 0; j < matrix->columns; j++)
+            {
+                fprintf(file, "%f\n", matrix->data[i * matrix->columns + j]);
+            }
+        }
+        fclose(file);
+    }
+    else
+    {
+        printf("Couldn't open a stream for matrix text file %s!\nMake sure the containing folder exists.\n", filepath);
+    }
+}
+
+matrix_t* matrix_load_binary(char* filepath)
+{
+    FILE* file = fopen(filepath, "rb");
+    if (file != NULL)
+    {
+        unsigned int rows = 0;
+        unsigned int columns = 0;
+        fread(&rows, sizeof(unsigned int), 1, file);
+        fread(&columns, sizeof(unsigned int), 1, file);
+        matrix_t* out = matrix_create(rows, columns);
+        out->rows = rows;
+        out->columns = columns;
+        fread(out->data, sizeof(float), out->rows * out->columns, file);
+        fclose(file);
+        return out;
+    }
+    else
+    {
+        printf("Couldn't open binary matrix file %s!\nMake sure the file exists.\n", filepath);
+        return NULL;
+    }
+}
+
+matrix_t* matrix_load_text(char* filepath)
+{
+    FILE* file = fopen(filepath, "rb");
+    if (file != NULL)
+    {
+        unsigned int rows = 0;
+        unsigned int columns = 0;
+        fscanf(file, "%d\n%d\n", &rows, &columns);
+        matrix_t* out = matrix_create(rows, columns);
+        out->rows = rows;
+        out->columns = columns;
+        for (unsigned int i = 0; i < rows; i++)
+        {
+            for (unsigned int j = 0; j < columns; j++)
+            {
+                fscanf(file, "%f\n", &out->data[i * columns + j]);
+            }
+        }
+        fclose(file);
+        return out;
+    }
+    else
+    {
+        printf("Couldn't open matrix text file %s!\nMake sure the file exists.\n", filepath);
+        return NULL;
+    }
+}
+
 unsigned int matrix_check_dimensions(matrix_t* m1, matrix_t* m2)
 {
     return (m1->columns == m2->columns && m1->rows == m2->rows);

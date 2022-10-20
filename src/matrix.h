@@ -28,6 +28,18 @@ void matrix_random_fill(matrix_t* matrix);
 // Creates & returns a copy of an existing matrix.
 matrix_t* matrix_copy(matrix_t* source);
 
+// Writes a matrix to a binary file at the specified path.
+void matrix_save_binary(matrix_t* matrix, char* filepath);
+
+// Writes a matrix to a human-readable text file at the specified path.
+void matrix_save_text(matrix_t* matrix, char* filepath);
+
+// Loads a matrix from a binary file at the spcified path and returns it.
+matrix_t* matrix_load_binary(char* filepath);
+
+// Loads a matrix from a text file at the spcified path and returns it.
+matrix_t* matrix_load_text(char* filepath);
+
 // Returns 1 if the 2 matrices have the same dimensions, and 0 if not.
 unsigned int matrix_check_dimensions(matrix_t* m1, matrix_t* m2);
 
