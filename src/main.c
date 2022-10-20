@@ -1,9 +1,15 @@
 #include <stdio.h>
 
-#include "network.h"
 #include "helpers.h"
 #include "matrix.h"
 
+#define M_NUMINPUTS 2
+#define M_NUMHIDDENLAYERS 1
+#define M_NUMHIDDENNODES 2
+#define M_NUMOUTPUTS 1
+#define M_NUMTRAININGSETS 4
+
+#define M_LEARNINGRATE 0.1f
 
 int main() {
     float HiddenLayerOutput[M_NUMHIDDENNODES];
@@ -40,9 +46,8 @@ int main() {
         OutputBias[i] = init_weight();
     }
 
-    matrix_t* InputData = matrix_create(M_NUMINPUTS, M_NUMTRAININGSETS);
-
-    network_t Network = new_network(M_NUMINPUTS, M_NUMHIDDENLAYERS, M_NUMOUTPUTS, M_NUMHIDDENNODES);
+    // At the moment, you'll need to move this to the binary directory for it to work while debugging.
+    matrix_t* InputData = matrix_load_text("res/InputData.txt");
 
     int epochs = 10000000;
     // Iterate through training for a set number of epochs
