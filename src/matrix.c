@@ -89,6 +89,7 @@ void matrix_save_binary(matrix_t* matrix, char* filepath)
     else
     {
         printf("Couldn't open a stream for binary matrix file %s!\nMake sure the containing folder exists.\n", filepath);
+        free(file);
     }
 }
 
@@ -110,6 +111,7 @@ void matrix_save_text(matrix_t* matrix, char* filepath)
     else
     {
         printf("Couldn't open a stream for matrix text file %s!\nMake sure the containing folder exists.\n", filepath);
+        free(file);
     }
 }
 
@@ -132,6 +134,7 @@ matrix_t* matrix_load_binary(char* filepath)
     else
     {
         printf("Couldn't open binary matrix file %s!\nMake sure the file exists.\n", filepath);
+        free(file);
         return NULL;
     }
 }
@@ -160,6 +163,7 @@ matrix_t* matrix_load_text(char* filepath)
     else
     {
         printf("Couldn't open matrix text file %s!\nMake sure the file exists.\n", filepath);
+        free(file);
         return NULL;
     }
 }
