@@ -177,3 +177,16 @@ matrix_t* matrix_dot(matrix_t* m1, matrix_t* m2)
         return NULL;
     }
 }
+
+matrix_t* matrix_apply_function(matrix_t* input, float (*function)(float))
+{
+    matrix_t* out = matrix_copy(input);
+    for (unsigned int i = 0; i < out->rows; i++)
+    {
+        for (unsigned int j = 0; j < out->columns; j++)
+        {
+            out->data[i * out->columns + j] = function(out->data[i * out->columns + j]);
+        }
+    }
+    return out;
+}

@@ -16,6 +16,9 @@ void matrix_free(matrix_t* matrix);
 // Prints the contents of a matrix to stdout.
 void matrix_print(matrix_t* matrix);
 
+// Applies a function to every element of a matrix. The function must return a float and take 1 float argument.
+matrix_t* matrix_apply_function(matrix_t* input, float (*function)(float));
+
 // Fills a matrix with a specified float value.
 void matrix_fill(matrix_t* matrix, float value);
 
