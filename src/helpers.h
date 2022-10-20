@@ -1,3 +1,5 @@
+#pragma once
+
 // Activation function and its derivative
 float sigmoid(float x);
 float dSigmoid(float x);

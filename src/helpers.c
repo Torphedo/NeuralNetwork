@@ -1,6 +1,4 @@
 #include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
 
 // Activation function and its derivative
 float sigmoid(float x)
