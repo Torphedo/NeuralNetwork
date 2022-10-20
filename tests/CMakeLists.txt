@@ -7,7 +7,9 @@ create_test_sourcelist (UnitTests
   "CommonCTests.c" # Test driver file that makes up the main() function and takes arguments to run unit tests
   "nn_tests_matrix_add.c"
   "nn_tests_matrix_add_scalar.c"
+  "nn_tests_matrix_copy.c"
   "nn_tests_matrix_dot.c"
+  "nn_tests_matrix_fill.c"
   "nn_tests_matrix_scale.c"
   "nn_tests_matrix_subtract.c"
 )

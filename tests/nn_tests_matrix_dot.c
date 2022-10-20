@@ -4,11 +4,21 @@ int nn_tests_matrix_dot()
 {
 	matrix_t* m1 = matrix_create(2, 3);
 	matrix_t* m2 = matrix_create(3, 2);
+	matrix_t* m3 = matrix_create(4, 4);
 
 	matrix_random_fill(m1);
 	matrix_random_fill(m2);
 
     matrix_t* dotproduct = matrix_dot(m1, m2);
+    matrix_t* dim_check = matrix_dot(m2, m3); // This isn't freed because the test should fail if it allocates
+    if ((dim_check != (void*)0 && m2->columns != m3->rows) || (dim_check == (void*)0 && m2->columns == m3->rows))
+    {
+        matrix_free(m1);
+        matrix_free(m2);
+        matrix_free(m3);
+        matrix_free(dotproduct);
+        return 1;
+    }
 
     for (unsigned int i = 0; i < m1->rows; i++)
     {
