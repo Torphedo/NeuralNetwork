@@ -1,26 +1,14 @@
 #include <matrix.h>
 
-matrix_t* m1;
-matrix_t* m2;
-matrix_t* dotproduct;
-
-void exit_test(int code)
+int nn_tests_matrix_dot()
 {
-    matrix_free(m1);
-    matrix_free(m2);
-    matrix_free(dotproduct);
-    exit(code);
-}
-
-int main()
-{
-	m1 = matrix_create(2, 3);
-	m2 = matrix_create(3, 2);
+	matrix_t* m1 = matrix_create(2, 3);
+	matrix_t* m2 = matrix_create(3, 2);
 
 	matrix_random_fill(m1);
 	matrix_random_fill(m2);
 
-	dotproduct = matrix_dot(m1, m2);
+    matrix_t* dotproduct = matrix_dot(m1, m2);
 
     for (unsigned int i = 0; i < m1->rows; i++)
     {
@@ -34,9 +22,15 @@ int main()
             if (sum != dotproduct->data[i * m2->columns + j])
             {
                 // Fail if the result from matrix_dot() doesn't match the dot product logic here
-                exit_test(1);
+                matrix_free(m1);
+                matrix_free(m2);
+                matrix_free(dotproduct);
+                return 1;
             }
         }
     }
-    exit_test(0);
+    matrix_free(m1);
+    matrix_free(m2);
+    matrix_free(dotproduct);
+    return 0;
 }

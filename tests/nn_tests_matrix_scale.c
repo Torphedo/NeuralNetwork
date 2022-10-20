@@ -2,21 +2,11 @@
 
 #define FACTOR 4.0f
 
-matrix_t* m1;
-matrix_t* scaled;
-
-void exit_test(int code)
+int nn_tests_matrix_scale()
 {
-    matrix_free(m1);
-    matrix_free(scaled);
-    exit(code);
-}
-
-int main()
-{
-	m1 = matrix_create(2, 2);
+    matrix_t* m1 = matrix_create(2, 2);
 	matrix_random_fill(m1);
-	scaled = matrix_scale(m1, FACTOR);
+    matrix_t* scaled = matrix_scale(m1, FACTOR);
 
     for (unsigned int i = 0; i < m1->rows; i++)
     {
@@ -24,9 +14,13 @@ int main()
         {
             if (m1->data[i * m1->columns + j] * FACTOR != scaled->data[i * m1->columns + j])
             {
-                exit_test(1);
+                matrix_free(m1);
+                matrix_free(scaled);
+                return 1;
             }
         }
     }
-    exit_test(0);
+    matrix_free(m1);
+    matrix_free(scaled);
+    return 0;
 }
