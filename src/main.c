@@ -5,20 +5,20 @@
 
 #define M_NUMINPUTS 2
 #define M_NUMHIDDENLAYERS 1
-#define M_NUMHIDDENNODES 2
+#define M_NUMHIDDDENNEURONS 2
 #define M_NUMOUTPUTS 1
 #define M_NUMTRAININGSETS 4
 
 static const float LearningRate = 0.1f;
 
 int main() {
-    float HiddenLayerOutput[M_NUMHIDDENNODES];
-    float HiddenWeights[M_NUMINPUTS][M_NUMHIDDENNODES];
-    float HiddenBias[M_NUMHIDDENNODES];
+    float HiddenLayerOutput[M_NUMHIDDDENNEURONS];
+    float HiddenWeights[M_NUMINPUTS][M_NUMHIDDDENNEURONS];
+    float HiddenBias[M_NUMHIDDDENNEURONS];
 
     float OutputLayer[M_NUMOUTPUTS];
     float OutputBias[M_NUMOUTPUTS];
-    float OutputWeights[M_NUMHIDDENNODES][M_NUMOUTPUTS];
+    float OutputWeights[M_NUMHIDDDENNEURONS][M_NUMOUTPUTS];
 
 
     // Basic XOR dataset
@@ -32,11 +32,11 @@ int main() {
     };
 
     for (int i = 0; i < M_NUMINPUTS; i++) {
-        for (int j = 0; j < M_NUMHIDDENNODES; j++) {
+        for (int j = 0; j < M_NUMHIDDDENNEURONS; j++) {
             HiddenWeights[i][j] = init_weight();
         }
     }
-    for (int i = 0; i < M_NUMHIDDENNODES; i++) {
+    for (int i = 0; i < M_NUMHIDDDENNEURONS; i++) {
         HiddenBias[i] = init_weight();
         for (int j = 0; j < M_NUMOUTPUTS; j++) {
             OutputWeights[i][j] = init_weight();
@@ -45,9 +45,6 @@ int main() {
     for (int i = 0; i < M_NUMOUTPUTS; i++) {
         OutputBias[i] = init_weight();
     }
-
-    // At the moment, you'll need to move this to the binary directory for it to work while debugging.
-    matrix_t* InputData = matrix_load_text("res/InputData.txt");
 
     unsigned int epochs = 10000000;
     // Iterate through training for a set number of epochs
@@ -67,7 +64,7 @@ int main() {
             int i = trainingSetOrder[x];
 
             // Compute hidden layer activation
-            for (int j = 0; j < M_NUMHIDDENNODES; j++) {
+            for (int j = 0; j < M_NUMHIDDDENNEURONS; j++) {
                 float activation = HiddenBias[j];
                 for (int k = 0; k < M_NUMINPUTS; k++) {
                     activation += TrainingInputs[i][k] * HiddenWeights[k][j];
@@ -79,7 +76,7 @@ int main() {
             // Compute output layer activation
             for (int j = 0; j < M_NUMOUTPUTS; j++) {
                 float activation = OutputBias[j];
-                for (int k = 0; k < M_NUMHIDDENNODES; k++) {
+                for (int k = 0; k < M_NUMHIDDDENNEURONS; k++) {
                     activation += HiddenLayerOutput[k] * OutputWeights[k][j];
                 }
                 OutputLayer[j] = sigmoid(activation);
@@ -102,8 +99,8 @@ int main() {
             }
 
             // Compute change in hidden weights
-            float deltaHidden[M_NUMHIDDENNODES];
-            for (int j = 0; j < M_NUMHIDDENNODES; j++) {
+            float deltaHidden[M_NUMHIDDDENNEURONS];
+            for (int j = 0; j < M_NUMHIDDDENNEURONS; j++) {
                 float dError = 0.0f;
                 for (int k = 0; k < M_NUMOUTPUTS; k++) {
                     dError += deltaOutput[k] * OutputWeights[j][k];
@@ -114,12 +111,12 @@ int main() {
             // Apply change in output weights
             for (int j = 0; j < M_NUMOUTPUTS; j++) {
                 OutputBias[j] += deltaOutput[j] * LearningRate;
-                for (int k = 0; k < M_NUMHIDDENNODES; k++) {
+                for (int k = 0; k < M_NUMHIDDDENNEURONS; k++) {
                     OutputWeights[k][j] += HiddenLayerOutput[k] * deltaOutput[j] * LearningRate;
                 }
             }
             // Apply change in hidden weights
-            for (int j = 0; j < M_NUMHIDDENNODES; j++) {
+            for (int j = 0; j < M_NUMHIDDDENNEURONS; j++) {
                 HiddenBias[j] += deltaHidden[j] * LearningRate;
                 for (int k = 0; k < M_NUMINPUTS; k++) {
                     HiddenWeights[k][j] += TrainingInputs[i][k] * deltaHidden[j] * LearningRate;
