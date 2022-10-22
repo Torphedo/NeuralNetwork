@@ -177,13 +177,12 @@ matrix_t* matrix_add(matrix_t* m1, matrix_t* m2)
 {
     if (matrix_check_dimensions(m1, m2))
     {
-        matrix_t* sum = matrix_create(m1->rows, m1->columns);
+        matrix_t* sum = matrix_copy(m1);
         for (unsigned int i = 0; i < m1->rows; i++)
         {
             for (unsigned int j = 0; j < m1->columns; j++)
             {
-                // sum->data[i][j] = m1->data[i][j] + m2->data[i][j];
-                sum->data[i * m1->columns + j] = m1->data[i * m1->columns + j] + m2->data[i * m1->columns + j];
+                sum->data[i * m1->columns + j] += m2->data[i * m1->columns + j];
             }
         }
         return sum;
