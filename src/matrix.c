@@ -16,7 +16,7 @@ matrix_t* matrix_create(unsigned int rows, unsigned int columns)
     else
     {
         printf("CRITICAL: Failed to allocate matrix buffer!\nRows: %d\nColumns: %d\nTotal Size: %d bytes\n", rows, columns, rows * columns * (unsigned int)sizeof(float));
-        return -1;
+        return NULL;
     }
 }
 
@@ -66,15 +66,23 @@ void matrix_random_fill(matrix_t* matrix)
 
 matrix_t* matrix_copy(matrix_t* source)
 {
-    matrix_t* destination = matrix_create(source->rows, source->columns);
-    for (unsigned int i = 0; i < source->rows; i++)
+    if (source != NULL)
     {
-        for (unsigned int j = 0; j < source->columns; j++)
+        matrix_t* destination = matrix_create(source->rows, source->columns);
+        for (unsigned int i = 0; i < source->rows; i++)
         {
-            destination->data[i * destination->columns + j] = source->data[i * source->columns + j];
+            for (unsigned int j = 0; j < source->columns; j++)
+            {
+                destination->data[i * destination->columns + j] = source->data[i * source->columns + j];
+            }
         }
+        return destination;
     }
-    return destination;
+    else
+    {
+        printf("Matrix copy failed! (nullptr source)\n");
+        return NULL;
+    }
 }
 
 void matrix_save_binary(matrix_t* matrix, char* filepath)

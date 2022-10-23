@@ -6,6 +6,12 @@ int nn_tests_matrix_copy()
 	matrix_t* src = matrix_create(4, 4);
 	matrix_random_fill(src);
 
+	matrix_t* null_check = matrix_copy(NULL);
+	if (null_check != NULL)
+	{
+		return 1;
+	}
+
 	matrix_t* dest = matrix_copy(src);
 	if (src->rows != dest->rows || src->columns != dest->columns) {
 		matrix_free(src);
